@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Beauty Scorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="hero">
+        <div>
+          <h1>Word Beauty Scorer</h1>
+          <p class="subtitle">Judge the aesthetic merit of written words</p>
+        </div>
+        <div class="sample-words" aria-label="Sample words to try">
+          <span>Try these:</span>
+          <button data-word="smooth">smooth</button>
+          <button data-word="zigzag">zigzag</button>
+          <button data-word="level">level</button>
+          <button data-word="bubble">bubble</button>
+          <button data-word="crypt">crypt</button>
+          <button data-word="gorgeous">gorgeous</button>
+        </div>
+      </header>
+
+      <div class="top-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+          🌙
+        </button>
+        <button id="controls-toggle" class="controls-toggle" aria-label="Toggle settings panel" aria-expanded="false">
+          ⚙️ Customize
+        </button>
+      </div>
+
+      <main class="content">
+        <section class="primary">
+          <div class="word-input">
+            <label for="word-field" class="sr-only">Enter a word</label>
+            <input
+              id="word-field"
+              type="text"
+              placeholder="Enter a word..."
+              autocomplete="off"
+              aria-describedby="current-word"
+            />
+            <div id="current-word" aria-live="polite"></div>
+          </div>
+
+          <div class="word-generator">
+            <label for="generator-range">Generate a word:</label>
+            <div class="generator-controls">
+              <select id="generator-range">
+                <option value="0-29">Harsh and angular (0-29)</option>
+                <option value="30-49">Intriguing but rough (30-49)</option>
+                <option value="50-69">Pleasantly shaped (50-69)</option>
+                <option value="70-84">Graceful and refined (70-84)</option>
+                <option value="85-100">Gorgeous typography (85-100)</option>
+              </select>
+              <button id="generate-btn" type="button">Generate</button>
+            </div>
+          </div>
+
+          <section class="score-display" aria-live="polite">
+            <div class="score-number" id="score-number">0</div>
+            <div class="score-meter">
+              <div class="score-meter-fill" id="score-meter-fill"></div>
+            </div>
+            <p class="score-label" id="score-label">Awaiting a word...</p>
+          </section>
+
+          <section class="breakdown" aria-live="polite">
+            <h2>Score Breakdown</h2>
+            <dl id="breakdown-list"></dl>
+          </section>
+        </section>
+
+        <aside class="controls" aria-label="Scoring controls" id="controls-panel">
+          <div class="controls-header">
+            <h2>Adjust the aesthetic philosophy</h2>
+            <button id="reset-btn" type="button" class="reset-btn" title="Reset to defaults">
+              ↺ Reset
+            </button>
+          </div>
+
+          <div class="precompute-section">
+            <button id="precompute-btn" type="button" class="precompute-btn">
+              Precompute for fast generation
+            </button>
+            <button id="clear-cache-btn" type="button" class="clear-cache-btn">
+              Clear all caches
+            </button>
+            <div id="precompute-progress" class="precompute-progress" style="display: none;">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+              <span class="progress-text" id="progress-text">0%</span>
+            </div>
+          </div>
+
+          <form id="settings-form">
+            <div class="control-group">
+              <label for="harmony-contrast">Harmony vs. Contrast</label>
+              <input type="range" id="harmony-contrast" min="0" max="100" value="50" />
+              <div class="range-values">
+                <span>Harmony</span>
+                <span>Contrast</span>
+              </div>
+            </div>
+
+            <div class="control-group toggle">
+              <label>
+                <input type="checkbox" id="palindrome-toggle" />
+                Symmetry bonus (palindromes)
+              </label>
+            </div>
+
+            <fieldset class="control-group toggles">
+              <legend>Letter type preferences</legend>
+              <label>
+                <input type="checkbox" id="favor-curves" /> Favor curves
+              </label>
+              <label>
+                <input type="checkbox" id="favor-angles" /> Favor angles
+              </label>
+              <label>
+                <input type="checkbox" id="favor-balance" /> Favor balance
+              </label>
+            </fieldset>
+
+            <div class="control-group toggle">
+              <label>
+                <input type="checkbox" id="visual-rhythm" /> Visual rhythm bonus
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label for="repetition-slider">Repetition aesthetic</label>
+              <input type="range" id="repetition-slider" min="-20" max="20" value="0" />
+              <div class="range-values">
+                <span>Minimal repeats</span>
+                <span>Lush repeats</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="length-preference">Word length preference</label>
+              <select id="length-preference">
+                <option value="neutral">Neutral</option>
+                <option value="minimalist">Minimalist (3-5 letters)</option>
+                <option value="elaborate">Elaborate (8+ letters)</option>
+              </select>
+            </div>
+
+            <div class="control-group toggle">
+              <label>
+                <input type="checkbox" id="vowel-flow" /> Vowel flow bonus
+              </label>
+            </div>
+          </form>
+        </aside>
+      </main>
+
+      <section class="discoveries" aria-live="polite">
+        <div>
+          <h2>Most beautiful discoveries</h2>
+          <ul id="best-words"></ul>
+        </div>
+        <div>
+          <h2>Most challenging discoveries</h2>
+          <ul id="worst-words"></ul>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          A gloriously overengineered toy project exploring aesthetic algorithms
+          · <a href="https://github.com/TickTockBent/word-beauty" target="_blank" rel="noopener">View source on GitHub</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
