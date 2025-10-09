@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Beauty Scorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="hero">
+        <div>
+          <h1>Word Beauty Scorer</h1>
+          <p class="subtitle">Judge the aesthetic merit of written words</p>
+        </div>
+        <div class="sample-words" aria-label="Sample words to try">
+          <span>Try these:</span>
+          <button data-word="smooth">smooth</button>
+          <button data-word="zigzag">zigzag</button>
+          <button data-word="level">level</button>
+          <button data-word="bubble">bubble</button>
+          <button data-word="crypt">crypt</button>
+          <button data-word="gorgeous">gorgeous</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="primary">
+          <div class="word-input">
+            <label for="word-field" class="sr-only">Enter a word</label>
+            <input
+              id="word-field"
+              type="text"
+              placeholder="Enter a word..."
+              autocomplete="off"
+              aria-describedby="current-word"
+            />
+            <div id="current-word" aria-live="polite"></div>
+          </div>
+
+          <section class="score-display" aria-live="polite">
+            <div class="score-number" id="score-number">0.0</div>
+            <div class="score-meter">
+              <div class="score-meter-fill" id="score-meter-fill"></div>
+            </div>
+            <p class="score-label" id="score-label">Awaiting a word...</p>
+          </section>
+
+          <section class="breakdown" aria-live="polite">
+            <h2>Score Breakdown</h2>
+            <dl id="breakdown-list"></dl>
+          </section>
+        </section>
+
+        <aside class="controls" aria-label="Scoring controls">
+          <h2>Adjust the aesthetic philosophy</h2>
+          <form id="settings-form">
+            <div class="control-group">
+              <label for="harmony-contrast">Harmony vs. Contrast</label>
+              <input type="range" id="harmony-contrast" min="0" max="100" value="50" />
+              <div class="range-values">
+                <span>Harmony</span>
+                <span>Contrast</span>
+              </div>
+            </div>
+
+            <div class="control-group toggle">
+              <label>
+                <input type="checkbox" id="palindrome-toggle" />
+                Symmetry bonus (palindromes)
+              </label>
+            </div>
+
+            <fieldset class="control-group toggles">
+              <legend>Letter type preferences</legend>
+              <label>
+                <input type="checkbox" id="favor-curves" /> Favor curves
+              </label>
+              <label>
+                <input type="checkbox" id="favor-angles" /> Favor angles
+              </label>
+              <label>
+                <input type="checkbox" id="favor-balance" /> Favor balance
+              </label>
+            </fieldset>
+
+            <div class="control-group toggle">
+              <label>
+                <input type="checkbox" id="visual-rhythm" /> Visual rhythm bonus
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label for="repetition-slider">Repetition aesthetic</label>
+              <input type="range" id="repetition-slider" min="-20" max="20" value="0" />
+              <div class="range-values">
+                <span>Minimal repeats</span>
+                <span>Lush repeats</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="length-preference">Word length preference</label>
+              <select id="length-preference">
+                <option value="neutral">Neutral</option>
+                <option value="minimalist">Minimalist (3-5 letters)</option>
+                <option value="elaborate">Elaborate (8+ letters)</option>
+              </select>
+            </div>
+
+            <div class="control-group toggle">
+              <label>
+                <input type="checkbox" id="vowel-flow" /> Vowel flow bonus
+              </label>
+            </div>
+          </form>
+        </aside>
+      </main>
+
+      <section class="discoveries" aria-live="polite">
+        <div>
+          <h2>Most beautiful discoveries</h2>
+          <ul id="best-words"></ul>
+        </div>
+        <div>
+          <h2>Most challenging discoveries</h2>
+          <ul id="worst-words"></ul>
+        </div>
+      </section>
+    </div>
+
+    <script src="main.js" type="module"></script>
+  </body>
+</html>
